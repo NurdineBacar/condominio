@@ -1,0 +1,13 @@
+:root{
+    --inactive-color: #003b41;
+    --active-color: #167277;
+    --text-white:white;
+    --bg-box:white;
+    --profile-border-color:black;
+    --border-color: rgb(179, 177, 177);
+
+    --active-house:rgb(0, 102, 197);
+    --inactive-house:red;
+    --btn-bg: #003b41;
+    --btn-hover:#247d82;
+}
