@@ -1,19 +1,24 @@
 <template>
     <div class="row box rounded align-items-center px-2 py-2 my-2">
         <div class="col-md-auto">
-            <span id="icon"><i class="fa-regular fa-file-lines fs-1 " ></i></span>
+            <span id="icon"><i :class="list.icon+' fs-3'" ></i></span>
         </div>
 
         <div class="col-md">
-            <h5>Lorem</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio voluptatibus
-                voluptatem laboriosam aspernatur labore consequuntur libero numquam 
-                iure delectus ullam! Molestiae, 
-                beatae enim doloribus amet voluptatum vero sunt! Unde, culpa!
+            <h5>{{ list.title }}</h5>
+            <p>
+                {{ list.details }}
             </p>
         </div>
     </div>    
 </template>
+
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps(['list'])
+
+</script>
 
 <style scoped>
 .box{

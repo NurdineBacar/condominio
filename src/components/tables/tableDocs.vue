@@ -16,275 +16,25 @@
                     <td>
                         <div class="d-flex gap-1 justify-content-center">
                             <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
+                            <span>Regulamento do Condomínio</span>
                         </div>
                     </td>
                     <td>
                         <span class="badge bg" >pdf</span>
                     </td>
                     <td>
-                        9 MB
+                        4 MB
                     </td>
                     <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
+                        <span>Marcelo Administrador</span><br>
+                        <span>marceloadministrador@gmail.com</span>
                     </td>
                     <td>
-                        13/08/2000
+                        20/09/2024
                     </td>
                     <td class="d-flex gap-1 justify-content-center">
                         <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>kjadkskahdkjasda</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg" >pdf</span>
-                    </td>
-                    <td>
-                        9 MB
-                    </td>
-                    <td class="" id="user-doc">
-                        <span>Nurdine Aboo Bacar</span><br>
-                        <span>nurdinebacar@gmail.com</span>
-                    </td>
-                    <td>
-                        13/08/2000
-                    </td>
-                    <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn" v-show="user.typeUser == 'admin'"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -292,7 +42,21 @@
     </div>
 </template>
 
+<script>
+import { ref,onMounted } from "vue";
 
+const user = ref('');
+  onMounted( async() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      user.value = JSON.parse(storedUser);
+    } 
+    try{
+        
+    }catch(error){
+        console.log("Erro ao buscar dados", error);
+    }
+  });</script>
 
 <style scoped>
     table{

@@ -10,50 +10,14 @@
         <div class="col-md-5 align-self-end">
             <div class="d-flex gap-2 justify-content-end">
                 <button class="btn" id="nova" data-bs-toggle="modal" data-bs-target="#houseModal"><i class="fa-solid fa-house"></i> Nova</button>
-                <inputs input-type="search"  p-holder="Nº casa ou Morador" icon="fa-solid fa-magnifying-glass"/>
+                <inputs input-type="search"  p-holder="Nº casa ou Morador" icon="fa-solid fa-magnifying-glass" v-model="search"/>
                 <cSelect class="w-25" :opts="filtro"/>
             </div>
         </div>
         <div class="col-md-12 mt-3">
             <div class="row" id="houses">
-                <div class="col-md-3 mb-3" >
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <house/>
+                <div class="col-md-3 mb-3" v-for="house in searcFiltre" :key="house.id">
+                    <house :home="house"/>
                 </div>
                 <div class="col-md-3 mb-3">
                     <addHouse/>
@@ -73,7 +37,40 @@ import house from "../components/house.vue";
 import addHouse from "../components/addHouse.vue";
 import houseModal from "../components/houseModal.vue";
 import userModal from "../components/userModal.vue";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
+
+const listHouses= ref([]);
+const search = ref('');
+
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost/condomino/src/backend/controllers/listHouse.php', { method: 'GET' });
+    const json = await response.json();
+    if (json.success) {
+      listHouses.value = json.data;
+      console.log(listHouses.value)
+    } else {
+      console.error('Erro na resposta:', json.message);
+    }
+  } catch (error) {
+    console.log('Erro ao buscar dados:', error);
+  }
+
+  console.log(listHouses)
+});
+
+// const filteredReservation = computed(() => {
+//   return listReservation.value.filter(reserva =>
+//   seletedUser.value === '' || user.typeUser === seletedUser.value
+//   );
+// });
+
+const searcFiltre= computed(()=>{
+  return listHouses.value.filter(house =>
+  house.nhouse.toLowerCase().includes(search.value.toLowerCase()) || search.value == house.casa || search.value ==''
+  )
+});
 
 let filtro=[
     {val:"activo",name:"activo"},

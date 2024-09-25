@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="col-md-12 mt-2">
+    <div class="col-md-12 mt-2" v-show="user.typeUser === 'admin'">
         <inputFile/>
     </div>
 
@@ -34,7 +34,22 @@ import inputs from "../components/inputs.vue";
 import cSelect from "../components/cSelect.vue";
 import inputFile from "../components/inputFile.vue";
 import tableDocs from "../components/tables/tableDocs.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+
+const user = ref('');
+  
+  // Carrega os dados do usuário ao montar o componente
+  onMounted( async() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      user.value = JSON.parse(storedUser);
+    } 
+    try{
+        
+    }catch(error){
+        console.log("Erro ao buscar dados", error);
+    }
+  });
 
 let docList = ref([
   { val: ".docx", name: ".docx" },

@@ -8,31 +8,35 @@
                     <td>Casa</td>
                     <td>Data</td>
                     <td>Hora</td>
+                    <td>Hora de Entrada</td>
+                    <td>Hora de Saida</td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr v-for="list in lists" :key="list.visita_id">
                     <td>
                         <span><i class="fa-solid fa-house-user me-2"></i>
-                            Nurdine Aboo Bacar</span>
+                            {{ list.name_user }}</span>
                     </td>
                     <td>
-                        Zulmira Macuacua
+                        {{ list.nome_visita }}
                     </td>
                     <td>
-                        <span class="fw-semibold">Nº 562</span>
+                        <span class="fw-semibold">Nº {{ list.nhouse }}</span>
                     </td>
                     <td>
-                       13/08/2024
+                       {{ list.data_visita }}
                     </td>
                     <td>
-                        13:00:00
+                        {{ list.hora_visita }}
                     </td>
+                    <td></td>
+                    <td></td>
                     <td>
                         <div class="d-flex gap-3 justify-content-center">
                            <button class="btn btn-danger rounded-circle"><i class="fa-solid fa-xmark"></i></button>
-                           <button class="btn rounded-circle" id="visit-check"><i class="fa-solid fa-check"></i></button>
+                           <button class="btn rounded-circle" id="visit-check" @click="acceptVisit(list)"><i class="fa-solid fa-check"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -42,7 +46,22 @@
     </div>
 </template>
 
+<script setup>
+import { defineProps } from "vue";
+import axios from 'axios';
 
+const props = defineProps(['lists']);
+
+
+const acceptVisit = async (visit)=>{
+    try{
+        
+    }catch(error){
+        console.log(error);
+    }
+}
+
+</script>
 
 <style scoped>
     button{

@@ -1,48 +1,39 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from "vue-router";
 import sidebar from "./components/sidebar.vue";
 import heade from "./components/header.vue";
 import sign from "./views/sign.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import notifications from "./components/notifications.vue";
 
-let login= ref(false)
-
-function logr(){
-  login.value=true;
-}
-
-function logout(){
-  login.value=false;
-}
+const route = useRoute();
+const isHomeOrForgotPassword = computed(() => {
+  return route.path === '/' || route.path === '/forgotPassword';
+});
 
 </script>
 
 <template>
   <div class="container-fluid bg-light my-2 ">
-   <!--Sign in-->
-   <div class="row" v-show="login==false">
-    <sign @logar="logr" />
-   </div>
-
    <!--app-->
-   <div class="row" v-show="login">
-      <div class="col-md-auto">
-        <sidebar  @logout="logout"/>
+   <div class="row">
+      <div class="col-md-auto" v-show="!isHomeOrForgotPassword">
+        <sidebar/>
       </div>
       <div class="col-md">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12" v-show="!isHomeOrForgotPassword">
             <heade page="Painel"/>
           </div>
           <div class="col-md-12">
             <RouterView/>
           </div>
-        </div>
-      </div>
     </div>
+      </div>
+  </div>
+  <notifications/>
   </div>
 </template>
 
 <style scoped>
-
 </style>

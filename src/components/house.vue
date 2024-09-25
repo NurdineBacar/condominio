@@ -1,7 +1,7 @@
 <template>
     <div id="box" class="rounded py-3 px-2">
         <div class="d-flex justify-content-between align-items-center">
-            <h6>Casa nº 123</h6>
+            <h6>Casa nº {{ home.nhouse }}</h6>
             <div class="d-flex gap-1">
                 <span id="icon"><i class="fa-solid fa-home"></i></span>
                 <span class="badge" data-status="active">Activo</span>
@@ -10,8 +10,8 @@
         <span class="badge mb-2"  id="moradores">Moradores</span>
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex" id="users">
-                <img src="/img/cat.jpg" alt="" width="35px" height="35px" class="rounded-circle">
-                <img src="/img/cat.jpg" alt="" width="35px" height="35px" class="rounded-circle">
+                <img src="/img/profile/user-profile.png" alt="" width="35px" height="35px" class="rounded-circle">
+                <img src="/img/profile/user-profile.png" alt="" width="35px" height="35px" class="rounded-circle">
                 <div class="nUsers rounded-circle">
                     <span class="fw-semibold text-white">+5</span>
                 </div>
@@ -28,7 +28,10 @@
 </template>
 
 
-<script>
+<script setup>
+import { ref, defineProps,defineEmits } from "vue";
+
+const props= defineProps(['home'])
 </script>
 
 <style scoped>

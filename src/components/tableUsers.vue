@@ -13,289 +13,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr v-for="user in users" :key="user.id">
                     <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
+                        <img :src="'/img/profile/'+user.photo" width="50px" height="50px" class="rounded" alt="">
                     </td>
                     <td>
-                        Nurdine Aboo Bacar
+                       {{ user.name_user }}
                     </td>
                     <td>
-                        (+258) 84 563 6664
+                        {{ user.telephone }}
                     </td>
                     <td>
-                        nurdinebacar@gmail.com
+                        {{ user.email }}
                     </td>
                     <td>
-                        nº 568
+                        nº {{ user.nhouse }}
                     </td>
                     <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
+                        <span class="badge bg-primary" >{{ user.ustatus }}</span> 
                     </td>
                     <td>
                         <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="/img/cat.jpg" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                        Nurdine Aboo Bacar
-                    </td>
-                    <td>
-                        (+258) 84 563 6664
-                    </td>
-                    <td>
-                        nurdinebacar@gmail.com
-                    </td>
-                    <td>
-                        nº 568
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >Activo</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5"></i></a>
+                            <a href=""><i class="fa-solid fa-pen-to-square fs-5" @click.prevent="editUser(user.id)"></i></a>
+                            <a href=""><i class="fa-solid fa-trash fs-5" @click.prevent="deleteUser(user.id)"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -304,6 +44,28 @@
     </div>
 </template>
 
+<script setup>
+import { defineProps } from "vue";
+import axios from "axios";
+
+const props= defineProps(['users']);
+
+const deleteUser =  async (id_user)=>{
+    try{
+        const response = await axios.post("http://localhost/condomino/src/backend/controllers/deleteUser.php", {
+            id: id_user,
+        });
+
+        if(response.data.success){
+            console.log("Usuario elimidao com, sucesso")
+        }else{
+            console.log("errro ao deltar o usaurio: ", response.data.message)
+        }
+    }catch(error){
+        console.log("Erro ao buscadar dados: ",error)
+    }
+}
+</script>
 
 
 <style scoped>

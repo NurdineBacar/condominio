@@ -9,40 +9,40 @@
          <div class="modal-body">
            <div class="row gap-1 justify-content-center ">
             <div class="col-md-5 mb-2">
-                <span class="fw-semibold mb-2">Area da Reserva</span>
-                <cSelect :opts="area" />
+                <span class="fw-semibold mb-2">Aréa da Reserva</span>
+                <cSelect :opts="listArea" v-model="area"/>
             </div>
             <div class="col-md-5 mb-2">
-                <span class="fw-semibold mb-2">Proposito</span>
-                <cSelect :opts="proposito"/>
+                <span class="fw-semibold mb-2">Propósito</span>
+                <cSelect :opts="proposito" v-model="reason"/>
             </div>
             <div class="col-md-5 mb-2">
-                <span class="fw-semibold mb-2">Data e Hora</span>
-                <inputs input-type="datetime-local" icon="fa-regular fa-clock" />
+                <span class="fw-semibold mb-2">Data</span>
+                <inputs input-type="date" icon="fa-regular fa-clock" v-model="date_reservation"/>
             </div>
             <div class="col-md-5 mb-2">
                 <span class="fw-semibold mb-2">Duração</span>
-                <div class="d-flex">
+                <div class="d-flex flex-wrap">
                     <div>
-                        <inputs input-type="time"/>
+                        <inputs input-type="time" v-model="initTime" class="time"/>
                         <cite class="text-secondary">* Incio</cite>
                     </div> 
                     <span class="mx-2 fw-bold">_</span>
                     <div>
-                        <inputs input-type="time" />
+                        <inputs input-type="time" v-model="endTime" class="time"/>
                         <cite class="text-secondary">* Fim</cite>
                     </div>
                 </div>
             </div>
             <div class="col-md-10">
-                <span class="fw-semibold mb-2">Observacoes</span>
-                <textarea name="" id="" cols="30" rows="5" placeholder="Descricao do que se prentende no evento ..."></textarea>
+                <span class="fw-semibold mb-2">Observações</span>
+                <textarea name="" id="" cols="30" rows="5" placeholder="Descrição do que se prentende no evento ..." v-model="details"></textarea>
             </div>
            </div>
          </div>
          <div class="modal-footer">
            <button type="button" class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancelar</button>
-           <button type="button" class="btn btn-success fw-semibold"><i class="fa-solid fa-paper-plane"></i> Enviar pedido</button>
+           <button type="button" class="btn btn-success fw-semibold" @click="askReservation"><i class="fa-solid fa-paper-plane"></i> Enviar pedido</button>
          </div>
        </div>
      </div>
@@ -53,19 +53,54 @@
 import inputs from "../components/inputs.vue";
 import cSelect from "../components/cSelect.vue";
 import { ref } from "vue";
+import axios from "axios";
+
 
 let proposito=ref([
-   {val:"Aniversario", name:"Aniversario"},
+   {val:"Aniversário", name:"Aniversário"},
    {val:"Casamento", name:"Casamento"},
-   {val:"Graducao", name:"Graducao"},
-   {val:"Outros", name:"Outros"},
+   {val:"Graduação", name:"Graduação"},
+   {val:"Outros  Eventos", name:"Outros Eventos"},
 ]);
 
-let area=ref([
-   {val:"salão", name:"Salao"},
-   {val:"estacionamento", name:"estacionamento"},
-   {val:"quadra", name:"Quadra esportiva"},
+let listArea=ref([
+   {val:"Campo de Futebol", name:"Campo de Futebol"},
+   {val:"Campo de Futsal", name:"Campo de Futsal"},
+   {val:"Campo de Basquete", name:"Campo de Basquete"},
+   {val:"Salão de Eventos", name:"Salão de Eventos"},
 ]);
+
+
+const area=ref(''),
+      reason=ref(''),
+      date_reservation=ref(''),
+      initTime=ref(''),
+      endTime=ref(''),
+      details=ref('');
+
+const askReservation = async ()=>{
+   try{
+    const response = await axios.post("http://localhost/condomino/src/backend/controllers/addReserva.php",{
+        area: area.value,
+        reason:reason.value,
+        dateTime: date_reservation.value,
+        initTime: initTime.value,
+        endTime: endTime.value,
+        details: details.value,
+    });
+
+    if(response.data.success){
+      console.log("Criacao de pedidode reservarealizado com sucesso");
+      location.href='/reservation'
+    }else{
+      console.log("Erro: ",response.data.message)
+    }
+   }catch(error){
+    console.log("Erro ao inserir dados", error)
+   }
+
+
+}
 </script>
 
    <style scoped>
@@ -80,5 +115,9 @@ let area=ref([
         outline: none;
         padding: 10px;
         font-weight: 500;
+    }
+
+    .time{
+      font-size: 15px;
     }
    </style>

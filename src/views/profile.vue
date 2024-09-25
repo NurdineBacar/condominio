@@ -5,51 +5,54 @@
         <div class="col-md-12">
           <div class="position-relative" id="img-profile">
             <button class=" btn rounded-circle" data-bs-toggle="modal" data-bs-target="#userEditModal"><i class="fa-solid fa-pen"></i></button>
-            <img src="/img/cat.jpg" width="110px" height="110px" class="rounded-circle mx-auto" alt=""/>
+            <img :src="'img/profile/'+user.photo" width="110px" height="110px" class="rounded-circle mx-auto" alt=""/>
           </div>
-          <h6 class="text-center mt-2">NUrdine Aboo Bacar</h6>
-          <span class="badge" id="typeUser">Morador</span>
+          <h6 class="text-center mt-2">{{ user.name_user }}</h6>
+          <span class="badge" id="typeUser">{{ user.typeUSer }}</span>
           
         </div>
       </div>
       <div class="row gap-2 justify-content-center mt-3">
         <div class="col-md-10 rounded-pill text-center py-1 user-data">
           <h6>Nome</h6>
-          <span class="">Nurdine Aboo Bacar</span>
+          <span class="">{{ user.name_user }}</span>
         </div>
         <div class="col-md-10 rounded-pill text-center py-1 user-data">
           <h6>Contacto</h6>
-          <span class="">845636664</span>
+          <span class="">{{ user.telephone }}</span>
         </div>
         <div class="col-md-10 rounded-pill text-center py-1 user-data">
           <h6>Email</h6>
-          <span class="">nurdinebacar@gmail.com</span>
+          <span class="">{{ user.email }}</span>
         </div>
-        <div class="col-md-10 rounded-pill text-center py-1 user-data">
+        <div class="col-md-10 rounded-pill text-center py-1 user-data" v-show="user.typeUSer =='morador'">
           <h6>Casa</h6>
-          <span class="">Nº 563</span>
+          <span class="">Nº {{ user.nhouse }}</span>
         </div>
       </div>
     </div>
 
-    <div class="col-md">
+    <div class="col-md" v-show="user.typeUser=='morador'">
         <div class="container gap-2">
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-6">
                <div class="d-flex gap-3">
-                <uItem/>
-                <uItem/>
-                <uItem/>
+                <uItem :val="listVisits.length" title="Visitas"/>
+                <uItem :val="listReservation.length" title="Reservas" />
                </div>
             </div>
             <div class="col-md">
-              <button class="btn w-100  fw-semibold py-1" style="height: 100%;" id="visit"><i class="fa-solid fa-plus fs-5"></i> Visita</button>
+            <div class="d-flex gap-2 aligm-items-center" style="height: 100%;">
+              <button class="btn w-100  fw-semibold py-1" style="height: 100%;" id="visit"  data-bs-toggle="modal" data-bs-target="#addVisit"><i class="fa-solid fa-plus fs-5"></i> Visita</button>
+              <button class="btn w-100  fw-semibold py-1" style="height: 100%;" id="visit" @click="ficha"><i class="fa-solid fa-plus fs-5"></i> Ficha</button>
+            </div>
             </div>
             </div>
             <div class="col-md-12 mt-3">
                 <tProfile/>
             </div>
         </div>
+        <mVisit/>
         <userEditModal/>
     </div>
   </div>
@@ -59,6 +62,47 @@
 import uItem from "../components/uItem.vue";
 import tProfile from "../components/tableProfile.vue";
 import userEditModal from "../components/userEditModal.vue";
+import mVisit from "../components/modals/modalVisit.vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const user = ref('');
+const router = useRouter();
+const listVisits=ref([]),
+      listReservation=ref([]);
+  
+
+  const ficha = ()=>{
+    router.push('/document');
+  }
+  // Carrega os dados do usuário ao montar o componente
+  onMounted(async () => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      user.value = JSON.parse(storedUser);
+    } else {
+      // Se o usuário não estiver logado, redireciona para a página de login
+      router.push('/');
+    }
+
+
+    try{
+    const response_1 = await fetch('http://localhost/condomino/src/backend/controllers/listVisits.php', { method: 'GET' });
+    const json_1 = await response_1.json();
+    const response_2 = await fetch('http://localhost/condomino/src/backend/controllers/listReservation.php', { method: 'GET' });
+    const json_2 = await response_2.json();
+    if (json_1.success && json_2.success) {
+      listVisits.value = json_1.data;
+      listReservation.value = json_2.data;
+      console.log(listVisits.value)
+      console.log(listReservation.value)
+    } else {
+      console.error('Erro na resposta:', json.message);
+    }
+    }catch(error){
+      console.log("Erro ao consultar dados na bd");
+    }
+  });
 </script>
 
 <style scoped>

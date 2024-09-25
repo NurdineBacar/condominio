@@ -7,6 +7,7 @@
             input-type="search"
             icon="fa-solid fa-magnifying-glass"
             pHolder="Morador e Nº casa..."
+            v-model="search"
           />
           <button class="btn ">Procurar</button>
         </div>
@@ -27,7 +28,7 @@
     </div>
     <div class="row mt-2">
       <div class="col-md-12" id="table">
-        <visits class="w-100" />
+        <visits class="w-100" :lists="search.length>0? searcFiltre : listVisits"/>
       </div>
     </div>
   </div>
@@ -37,13 +38,44 @@
 import cSelect from "../components/cSelect.vue";
 import visits from "../components/tableVisits.vue";
 import inputs from "../components/inputs.vue";
-import { ref } from "vue";
+import { ref, onMounted,computed } from "vue";
 
 let sort = [
   { val: "", name: "Filtro" },
   { val: "activo", name: "activo" },
   { val: "inativo", name: "inativo" },
 ];
+
+const listVisits = ref([]);
+const search= ref('')
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost/condomino/src/backend/controllers/listVisits.php', { method: 'GET' });
+    const json = await response.json();
+    if (json.success) {
+      listVisits.value = json.data;
+      console.log(listVisits.value)
+    } else {
+      console.error('Erro na resposta:', json.message);
+    }
+  } catch (error) {
+    console.log('Erro ao buscar dados:', error);
+  }
+});
+
+// Computed property para filtrar os usuários
+// const filteredUsers = computed(() => {
+//   return listVisits.value.filter(visits =>
+//   seletedUser.value === '' || visits.typeUser === seletedUser.value
+//   );
+// });
+
+const searcFiltre= computed(()=>{
+  return listVisits.value.filter(visits =>
+  visits.nome_visita.toLowerCase().includes(search.value.toLowerCase()) || search.value ==''
+  )
+});
 </script>
   
   <style scoped>

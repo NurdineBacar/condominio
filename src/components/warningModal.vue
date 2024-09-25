@@ -9,34 +9,34 @@
        <div class="modal-body">
          <div class="row gap-1 justify-content-center ">
           <div class="col-md-5 mb-2">
-              <span class="fw-semibold mb-2">Titulo</span>
-              <inputs input-type="text" icon="fa-solid fa-lines-leaning" pHolder="Titulo do aviso"/>
+              <span class="fw-semibold mb-2">Título</span>
+              <inputs input-type="text" icon="fa-solid fa-lines-leaning" pHolder="Titulo do aviso" v-model="titulo"/>
           </div>
           <div class="col-md-5 mb-2">
               <span class="fw-semibold mb-2">Tipo de Aviso</span>
-              <cSelect :opts="typeWarnings"/>
+              <cSelect :opts="typeWarnings" v-model="tipo"/>
           </div>
           <div class="col-md-5 mb-2">
-              <span class="fw-semibold mb-2">Data de Expiracao</span>
-              <inputs input-type="date" icon="fa-regular fa-clock" />
+              <span class="fw-semibold mb-2">Data de Expiração</span>
+              <inputs input-type="date" icon="fa-regular fa-clock" v-model="data_validade"/>
           </div>
           <div class="col-md-5 mb-2">
               <span class="fw-semibold mb-2">Prioridade</span>
-              <cSelect :opts="prioridade"/>
+              <cSelect :opts="prioridade" v-model="nivel_prioridade"/>
           </div>
           <div class="col-md-10">
-              <span class="fw-semibold mb-2">Observacoes</span>
-              <textarea name="" id="" cols="30" rows="5" placeholder="Descricao do aviso ..."></textarea>
+              <span class="fw-semibold mb-2">Observações</span>
+              <textarea name="" id="" cols="30" rows="5" placeholder="Descrição do aviso ..." v-model="observacoes"></textarea>
           </div>
-          <div class="col-md-10">
+          <!-- <div class="col-md-10">
             <input type="file" name="anexo" id="anexo">
             <label for="anexo" id="anex"><i class="fa-solid fa-paperclip"></i> Anexo</label>
-          </div>
+          </div> -->
          </div>
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancelar</button>
-         <button type="button" class="btn btn-success fw-semibold"><i class="fa-solid fa-check"></i> Adicionar</button>
+         <button type="button" class="btn btn-success fw-semibold" @click="addWarning"><i class="fa-solid fa-check"></i> Adicionar</button>
        </div>
      </div>
    </div>
@@ -47,22 +47,47 @@
 import inputs from "../components/inputs.vue";
 import cSelect from "../components/cSelect.vue";
 import { ref } from "vue";
+import axios from 'axios';
 
 let typeWarnings=ref([
- {val:"", name:"Seleciona"},
- {val:"manutencao", name:"MANUTENCAO"},
- {val:"evento", name:"evento"},
- {val:"Graducao", name:"Graducao"},
+ {val:"Manutenção", name:"Manutenção"},
+ {val:"Evento", name:"Evento"},
  {val:"Outros", name:"Outros"},
 ]);
 
 let prioridade=ref([
- {val:"", name:"seleciona"},
- {val:"baixa", name:"baixa"},
- {val:"media", name:"media"},
- {val:"alta", name:"alta"},
- {val:"emergencia", name:"emergencia"},
+  {val:"Alta", name:"Alta"},
+  {val:"Média", name:"Média"},
+  {val:"Baixa", name:"Baixa"},
 ]);
+
+const titulo= ref(''),
+      tipo=ref(''),
+      nivel_prioridade=ref(''),
+      data_validade=ref(''),
+      observacoes=ref('');
+
+const addWarning= async ()=>{
+  try{
+    const response = await axios.post("http://localhost/condomino/src/backend/controllers/addWarn.php",{
+        titulo: titulo.value,
+        tipo: tipo.value,
+        nivel_prioridade: nivel_prioridade.value,
+        data_validade: data_validade.value,
+        observacoes: observacoes.value,
+        
+    });
+
+    if(response.data.success){
+      location.href='/warning'
+    }else{
+      console.log("Erro: ",response.data.message)
+    }
+   }catch(error){
+    console.log("Erro ao inserir dados", error)
+   }
+}
+
 </script>
 
  <style scoped>
