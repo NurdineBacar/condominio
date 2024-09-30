@@ -11,7 +11,7 @@
           natural de <b>{{ natural }}</b>, distrito <b>{{ distrito }}</b>, província de <b>{{ provincia }}</b>, nascido(a) aos <b>{{ data_nasc }}</b>, filho(a) de <b>{{ pai }}</b>
           e da <b>{{ mae }}</b>, residente no bairro de <b>{{ endereco }}</b>, bloco <b>...........</b>, edifício <b>...........</b>, apartamento nº <b>{{ user.nhouse }}</b>,
           área deste distrito. Necessita de confirmação de residência para efeitos de: <b>{{ efeitos_de }}</b>.<br>
-          Por ser verdade, passei-lhe a presente declaração que vai por assinatura, para apresentar na Estrutura de Administração do bairro de {{ estr_admin }}
+          Por ser verdade, passei-lhe a presente declaração que vai por assinatura.
         </p>
       </div>
 
@@ -67,10 +67,6 @@
             <inputs :input-type="'text'" pholder="Província" icon="fa-solid fa-id-card" v-model="provincia"/>
           </div>
           <div class="col-md-6">
-            <label>Data de Nascimento</label>
-            <inputs :input-type="'text'" pholder="Data de Nascimento" icon="fa-solid fa-id-card" v-model="data_nasc"/>
-          </div>
-          <div class="col-md-6">
             <label>Nome do Pai</label>
             <inputs :input-type="'text'" pholder="Nome do Pai" icon="fa-solid fa-id-card" v-model="pai"/>
           </div>
@@ -79,16 +75,16 @@
             <inputs :input-type="'text'" pholder="Nome da Mãe" icon="fa-solid fa-id-card" v-model="mae"/>
           </div>
           <div class="col-md-6">
+            <label>Data de Nascimento</label>
+            <inputs :input-type="'text'" pholder="Data de Nascimento" icon="fa-solid fa-id-card" v-model="data_nasc"/>
+          </div>
+          <div class="col-md-6">
             <label>Residente do Bairro (Bairro Atual)</label>
             <inputs :input-type="'text'" pholder="Residente do Bairro" icon="fa-solid fa-id-card" v-model="endereco"/>
           </div>
           <div class="col-md-6">
             <label>Para Efeitos de</label>
             <inputs :input-type="'text'" pholder="Para Efeitos de" icon="fa-solid fa-id-card" v-model="efeitos_de"/>
-          </div>
-          <div class="col-md-6">
-            <label>Estructura de Administracao do bairro</label>
-            <inputs :input-type="'text'" pholder="Para Efeitos de" icon="fa-solid fa-id-card" v-model="estr_admin"/>
           </div>
         </div>
       </div>

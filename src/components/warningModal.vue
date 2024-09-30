@@ -46,7 +46,7 @@
 <script setup>
 import inputs from "../components/inputs.vue";
 import cSelect from "../components/cSelect.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from 'axios';
 
 let typeWarnings=ref([
@@ -75,7 +75,8 @@ const addWarning= async ()=>{
         nivel_prioridade: nivel_prioridade.value,
         data_validade: data_validade.value,
         observacoes: observacoes.value,
-        
+        id_user: user.value.id,
+        type_not: 'aviso',
     });
 
     if(response.data.success){
@@ -87,6 +88,16 @@ const addWarning= async ()=>{
     console.log("Erro ao inserir dados", error)
    }
 }
+
+const user = ref(null)
+onMounted(async ()=>{
+  const storedUser = localStorage.getItem("user");
+
+  if (storedUser) {
+    user.value = JSON.parse(storedUser);
+    console.log(user.value)
+  } 
+})
 
 </script>
 

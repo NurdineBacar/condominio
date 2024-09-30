@@ -41,7 +41,7 @@
                     <td>
                       <h6>Nivel de Prioridade</h6>
                       <span
-                        class="badge bg-warning"
+                        :class="'badge '+ (view.level === 'alta'? 'bg-danger': view.level === 'media'? 'bg-warning':'bg-danger')"
                         >{{ view.level }}</span
                       >
                       

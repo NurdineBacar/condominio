@@ -11,6 +11,8 @@ try {
         v.nome_visita,
         v.data_visita,
         v.hora,
+        v.hora_entrada,
+        v.hora_saida,
         u.name_user,
         u.nhouse,
         u.id

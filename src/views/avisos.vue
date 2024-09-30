@@ -3,13 +3,28 @@
       <div class="col-md-8">
         <div class="col-md-12">
           <div class="d-flex gap-2">
-            <item icon="fa-brands fa-slack" evento="Todos" />
-            <item icon="fa-solid fa-home" evento="Desta Semana" />
-            <item icon="fa-solid fa-home" evento="Este Mês" />
-          </div>
+          <item
+            icon="fa-brands fa-slack"
+            evento="Todas"
+            value="todas"
+            v-model:selected="selectedFilter"
+          />
+          <item
+            icon="fa-solid fa-home"
+            evento="Desta Semana"
+            value="semana"
+            v-model:selected="selectedFilter"
+          />
+          <item
+            icon="fa-solid fa-home"
+            evento="Este Mês"
+            value="mes"
+            v-model:selected="selectedFilter"
+          />
+        </div>
           <div class="col-md-12">
            <div class="row mt-2 p-1" id="box">
-             <warnigs :warns="search.length>0? searcFiltre : listWarns "/>
+             <warnigs :warns="search.length>0? searcFiltre : filteredWarns "/>
            </div>
           </div>
         </div>
@@ -54,12 +69,22 @@
   import wModal from "../components/warningModal.vue";
   import calendar from "../components/calendar.vue";
   import { ref, onMounted, computed } from "vue";
+  import { useRouter } from "vue-router";
+const router = useRouter();
 
 const listWarns= ref([]);
 const search = ref('');
+const selectedFilter = ref('Todos');
+
 
 
 onMounted(async () => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    user.value = JSON.parse(storedUser);
+  }else{
+    router.push('/');
+  }
   try {
     const response = await fetch('http://localhost/condomino/src/backend/controllers/listWarnings.php', { method: 'GET' });
     const json = await response.json();
@@ -87,6 +112,54 @@ const searcFiltre= computed(()=>{
   warn.titulo.toLowerCase().includes(search.value.toLowerCase()) || search.value == warn.tipo || search.value ==''
   )
 });
+
+// Função que filtra os avisos com base na seleção e no tipo de usuário
+const filteredWarns = computed(() => {
+  if (search.value) {
+    return listWarns.value.filter(
+      (warn) =>
+        warn.titulo.toLowerCase().includes(search.value.toLowerCase()) ||
+        warn.tipo.toLowerCase().includes(search.value.toLowerCase())
+    );
+  }
+
+  const { start: weekStart, end: weekEnd } = getWeekStartAndEnd();
+  const { start: monthStart, end: monthEnd } = getMonthStartAndEnd();
+
+  return listWarns.value.filter((warn) => {
+    const warnDate = new Date(warn.data_validade); // Supondo que a data do aviso seja armazenada em 'data_aviso'
+
+    if (selectedFilter.value === "semana") {
+      return warnDate >= weekStart && warnDate <= weekEnd;
+    } else if (selectedFilter.value === "mes") {
+      return warnDate >= monthStart && warnDate <= monthEnd;
+    }
+
+    return true; // "Todos" os avisos
+  });
+});
+
+// Função para obter o primeiro e último dia da semana atual
+function getWeekStartAndEnd() {
+  const today = new Date();
+  const firstDayOfWeek = new Date(
+    today.setDate(today.getDate() - today.getDay())
+  );
+  const lastDayOfWeek = new Date(firstDayOfWeek);
+  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+
+  return { start: firstDayOfWeek, end: lastDayOfWeek };
+}
+
+// Função para obter o mês atual
+function getMonthStartAndEnd() {
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  return { start: firstDayOfMonth, end: lastDayOfMonth };
+}
+
   </script>
   
   <style scoped>

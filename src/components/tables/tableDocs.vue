@@ -5,36 +5,30 @@
                 <tr>
                     <td>Ficheiro</td>
                     <td>Formato</td>
-                    <td>Tamanho</td>
                     <td>Usuario</td>
                     <td>Data</td>
                     <td>Operacoes</td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr v-for="doc in docs" :key="doc.id">
                     <td>
                         <div class="d-flex gap-1 justify-content-center">
                             <i class="fa-regular fa-file-pdf fs-4"></i>
-                            <span>Regulamento do Condomínio</span>
+                            <span>{{ doc.doc_name }}</span>
                         </div>
                     </td>
                     <td>
                         <span class="badge bg" >pdf</span>
                     </td>
-                    <td>
-                        4 MB
-                    </td>
                     <td class="" id="user-doc">
-                        <span>Marcelo Administrador</span><br>
-                        <span>marceloadministrador@gmail.com</span>
+                        <span><i class="fa-solid fa-building fs-6 me-2"></i>Condomino</span><br>
                     </td>
-                    <td>
-                        20/09/2024
+                    <td>{{doc.data_registo}}
                     </td>
                     <td class="d-flex gap-1 justify-content-center">
-                        <button class="btn"><i class="fa-solid fa-download"></i></button>
-                        <button class="btn" v-show="user.typeUser == 'admin'"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn" @click="downloadFile(doc.id)"><i class="fa-solid fa-download"></i></button>
+                        <button class="btn" @click="deleteFile(doc.id)"  v-show="user.typeUser=='admin'"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -42,21 +36,78 @@
     </div>
 </template>
 
-<script>
-import { ref,onMounted } from "vue";
+<script setup>
+import { ref, onMounted, defineProps } from "vue";
+import axios from "axios";
+
+const props = defineProps(['docs']);
+const lDocuments = ref(null);
 
 const user = ref('');
-  onMounted( async() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      user.value = JSON.parse(storedUser);
-    } 
-    try{
-        
-    }catch(error){
-        console.log("Erro ao buscar dados", error);
+
+onMounted(async () => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    user.value = JSON.parse(storedUser);
+  } 
+});
+
+// Função para fazer download do arquivo
+const downloadFile = async (docId) => {
+  try {
+    const response = await fetch(`http://localhost/condomino/src/backend/controllers/downloadFile.php?id=${docId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `file-${docId}.pdf`; // Altere conforme necessário
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      console.error('Erro ao fazer o download:', response.statusText);
     }
-  });</script>
+  } catch (error) {
+    console.error('Erro ao buscar o arquivo:', error);
+  }
+};
+
+// Função para excluir o arquivo
+const deleteFile = async (docId) => {
+  if (confirm('Tem certeza que deseja excluir este arquivo?')) {
+    try {
+      const response = await axios.post(`http://localhost/condomino/src/backend/controllers/deleteFile.php`, {
+        id: docId, // Envie o ID como parte do corpo da requisição
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.data.success) {
+        alert(response.data.message); // Exiba a mensagem de sucesso
+        // Atualize a lista de documentos removendo o documento excluído
+        props.docs = props.docs.filter(doc => doc.id !== docId);
+        location.href = '/documents'
+      } else {
+        console.error('Erro ao excluir o arquivo:', response.data.message);
+        alert(response.data.message); // Exiba a mensagem de erro
+      }
+    } catch (error) {
+      console.error('Erro ao excluir o arquivo:', error);
+      alert('Ocorreu um erro ao excluir o arquivo.'); // Mensagem genérica de erro
+    }
+  }
+};
+
+
+</script>
 
 <style scoped>
     table{

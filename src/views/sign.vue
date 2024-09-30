@@ -17,8 +17,7 @@
           </div>
           <div class="col-md-12 mt-3">
             <label for="" class="fw-bold mb-2 fs-5">Senha</label>
-            <inputs
-              typeInput="password"
+            <inputP
               pHolder="Senha"
               icon="fa-solid fa-key"
               v-model="password"
@@ -49,14 +48,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,defineEmits } from "vue";
 import { store } from "../store";
 import { useRouter } from "vue-router";
+import inputP from "../components/inputPassword.vue";
 import axios from "axios";
 
 const router = useRouter();
-let username = ref("");
-let password = ref("");
+const username = ref("");
+const password = ref("");
+const emits = defineEmits(['userData']);
 
 const login = async () => {
   try {
@@ -72,17 +73,15 @@ const login = async () => {
     if (data.success) {
       console.log(data.data);
       localStorage.setItem('user', JSON.stringify(data.data));
-     
-      if(data.data.typeUser == "seguranca"){
-        router.push('/security');
-      }else{
-        router.push('/home');
-      }
+      emits('userData', data.data);
+      const redirectPath = data.data.typeUser === "seguranca" ? '/security' : '/home';
+      router.push(redirectPath);
     } else {
-      console.log("Erro ao consultar usuário: ", data.message);
+      console.error("Erro ao consultar usuário: ", data.message);
+      alert("Email ou Senha Incorrecto")
     }
   } catch (error) {
-    console.log("Erro ao verificar o usuário: ", error);
+    console.error("Erro ao verificar o usuário: ", error);
   }
 };
 </script>

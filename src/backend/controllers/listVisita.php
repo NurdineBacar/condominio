@@ -1,12 +1,12 @@
 <?php 
 
-include_once '../config/conexao.php';
+include_once('../api/db.php');
 
 $response = ['success' => false, 'data' => [], 'message' => ''];
 
 try{
     $query = "SELECT * FROM visitas where estado = 'pendente'"; 
-    $stmt = $connect->prepare($query);
+    $stmt = $db->prepare($query);
     $stmt->execute();
 
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -23,3 +23,4 @@ try{
 }
 
 echo json_encode($response);
+

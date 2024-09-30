@@ -52,7 +52,7 @@
 <script setup>
 import inputs from "../components/inputs.vue";
 import cSelect from "../components/cSelect.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
 
@@ -87,6 +87,8 @@ const askReservation = async ()=>{
         initTime: initTime.value,
         endTime: endTime.value,
         details: details.value,
+        id_user: user.value.id,
+        type_not: 'reserva',
     });
 
     if(response.data.success){
@@ -101,6 +103,16 @@ const askReservation = async ()=>{
 
 
 }
+
+const user = ref(null)
+onMounted(async ()=>{
+  const storedUser = localStorage.getItem("user");
+
+  if (storedUser) {
+    user.value = JSON.parse(storedUser);
+    console.log(user.value)
+  } 
+})
 </script>
 
    <style scoped>

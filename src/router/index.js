@@ -63,16 +63,22 @@ const router = createRouter({
       name: 'forgotPassword',
       component: () => import('../views/forgotPassword.vue')
     },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: () => import('../views/ResetPassword.vue')
+    },
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const isActive = sessionStorage.getItem('activeState'); // Verifica se o estado está ativo no sessionStorage
+  const user = sessionStorage.getItem('user'); // Verifica se o estado está ativo no sessionStorage
 
   if (to.path === '/forgotPassword') {
     // Permite acesso à tela de recuperação de senha independentemente do estado
     next();
-  } else if (isActive === "active" && to.path === '/login') {
+  } else if (user != null && to.path === '/home') {
     // Se o estado estiver ativo e o usuário tentar acessar a rota de login, redireciona para a rota principal
     next('/');
   } else {

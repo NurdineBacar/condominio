@@ -37,9 +37,12 @@ import cSelect from "../components/cSelect.vue";
 import users from "../components/tableUsers.vue";
 import uModal from "../components/userModal.vue";
 import inputs from "../components/inputs.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const seletedUser = ref('morador'); // Correção da variável
 let search=ref('')
+const user= ref(null)
 
 const sort = [
   { val: "activo", name: 'activo' },
@@ -49,6 +52,13 @@ const sort = [
 const lusers = ref([]);
 
 onMounted(async () => {
+  const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      user.value = JSON.parse(storedUser);
+    } else {
+      // Se o usuário não estiver logado, redireciona para a página de login
+      router.push('/');
+    }
   try {
     const response = await fetch('http://localhost/condomino/src/backend/controllers/listUsers.php', { method: 'GET' });
     const json = await response.json();

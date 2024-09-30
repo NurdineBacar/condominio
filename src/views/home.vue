@@ -48,22 +48,50 @@ import mVisit from "../components/modals/modalVisit.vue";
 import tableReservation from "../components/tableReservation.vue";
 import tableWarnig from "../components/tables/tableWarnig.vue";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+const user = ref(null);
 const listReservation = ref([]);
 const listWarns = ref([]);
 const selectedItem = ref('reserva'); // Inicializa com 'reserva' para ser o valor padrão
 
+
 onMounted(async () => {
+  // Recupera os dados do usuário autenticado do localStorage
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    user.value = JSON.parse(storedUser);
+  }else{
+    router.push('/');
+  }
+  
   try {
+    // Busca as reservas
     const response_1 = await fetch('http://localhost/condomino/src/backend/controllers/listReservation.php', { method: 'GET' });
     const json_1 = await response_1.json();
+    
     if (json_1.success) {
-      listReservation.value = json_1.data;
+      let reservations = json_1.data;
+
+      // Verifica o tipo de usuário
+      if (user.value.typeUser === 'morador') {
+        // Se for "morador", filtra as reservas aprovadas e pendentes
+        reservations = reservations.filter(reservation => 
+          reservation.aprovacao === 'aprovado' && reservation.estado === 'pendente'
+        );
+      } else if (user.value.typeUser === 'admin') {
+        // Se for "admin", lista todas as reservas sem filtros
+        reservations = json_1.data;
+      }
+
+      listReservation.value = reservations;
       console.log(listReservation.value);
     } else {
       console.error('Erro na resposta:', json_1.message);
     }
 
+    // Busca os avisos
     const response_2 = await fetch('http://localhost/condomino/src/backend/controllers/listWarnings.php', { method: 'GET' });
     const json_2 = await response_2.json();
     if (json_2.success) {

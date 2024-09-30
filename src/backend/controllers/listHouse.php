@@ -5,7 +5,13 @@ include_once('../api/db.php');
 $response = ['success' => false, 'data' => [], 'message' => ''];
 
 try {
-    $query = $db->query("SELECT * FROM houses");
+    // Query para selecionar todas as casas e contar o número de usuários por casa
+    $query = $db->query("
+        SELECT h.id, h.nhouse, h.nome_casa, h.hstatus, COUNT(u.id) AS resident_count 
+        FROM houses h 
+        LEFT JOIN users u ON h.nhouse = u.nhouse 
+        GROUP BY h.id
+    ");
 
     if ($query->num_rows > 0) {
         while($row = $query->fetch_assoc()) {

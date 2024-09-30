@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-md-12">
           <div class="position-relative" id="img-profile">
-            <button class=" btn rounded-circle" data-bs-toggle="modal" data-bs-target="#userEditModal"><i class="fa-solid fa-pen"></i></button>
+            <button class=" btn rounded-circle" data-bs-toggle="modal" data-bs-target="#editU"><i class="fa-solid fa-pen"></i></button>
             <img :src="'img/profile/'+user.photo" width="110px" height="110px" class="rounded-circle mx-auto" alt=""/>
           </div>
           <h6 class="text-center mt-2">{{ user.name_user }}</h6>
@@ -49,24 +49,25 @@
             </div>
             </div>
             <div class="col-md-12 mt-3">
-                <tProfile/>
+                <tProfile :user_id="user_id"/>
             </div>
         </div>
         <mVisit/>
-        <userEditModal/>
     </div>
+    <userEditModal />
   </div>
 </template>
 
 <script setup>
 import uItem from "../components/uItem.vue";
 import tProfile from "../components/tableProfile.vue";
-import userEditModal from "../components/userEditModal.vue";
+import userEditModal from "../components/modals/modalEditProfile.vue";
 import mVisit from "../components/modals/modalVisit.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const user = ref('');
+const user_id =ref(0);
 const router = useRouter();
 const listVisits=ref([]),
       listReservation=ref([]);
@@ -75,6 +76,8 @@ const listVisits=ref([]),
   const ficha = ()=>{
     router.push('/document');
   }
+
+  const dataUser =ref(null);
   // Carrega os dados do usuário ao montar o componente
   onMounted(async () => {
     const storedUser = localStorage.getItem('user');
@@ -96,6 +99,8 @@ const listVisits=ref([]),
       listReservation.value = json_2.data;
       console.log(listVisits.value)
       console.log(listReservation.value)
+      console.log(user.value.id)
+      user_id.value=user.value.id;
     } else {
       console.error('Erro na resposta:', json.message);
     }

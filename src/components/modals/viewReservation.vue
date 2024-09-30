@@ -41,14 +41,14 @@
                     <td>
                       <h6>Aprovacao</h6>
                       <span
-                        class="badge bg-warning"
+                      :class="'badge ' + (view.aprovation === 'aprovado' ? 'bg-success' : view.aprovation === 'pendente' ? 'bg-warning' : 'bg-danger')"
                         >{{ view.aprovation }}</span
                       >
                       
                     </td>
                     <td>
                       <h6>Estado</h6>
-                      <span class="badge bg-primary">{{ view.status }}</span>
+                      <span :class="'badge '+ (view.status === 'concluido'? 'bg-success': view.status === 'pendente'? 'bg-warning':'bg-danger')">{{ view.status }}</span>
                     </td>
                   </tr>
                   <tr>
@@ -80,10 +80,11 @@
                   {{ view.details}}
                 </span>
               </div>
-              <div class="col-md-12" v-show="access.typeUser == 'admin'">
-                <div class="d-flex justify-content-end gap-2">
-                  <button class="btn btn-outline-dark"> Rejeitar</button>
-                  <button class="btn btn-success"> Aprovar</button>
+              <div class="col-md-12 mt-1" v-show="access.typeUser == 'admin'">
+                <div class="d-flex justify-content-end gap-2" v-if="view.aprovation !='rejeitado'">
+                  <button class="btn btn-outline-dark" @click="rejectReservation(view.id)" v-show="view.aprovation !='aprovado'"> Rejeitar</button>
+                  <button class="btn btn-success" @click="aproveReservation(view.id)" v-show="view.aprovation !='aprovado'"> Aprovar</button>
+                  <button class="btn btn-danger" @click="cancelReservation(view.id)" v-show="view.aprovation =='aprovado' && view.status != 'cancelado'"> Cancelar Reserva</button>
                 </div>
               </div>
             </div>
@@ -95,6 +96,7 @@
      
     <script setup>
   import { defineProps, ref, onMounted } from "vue";
+  import axios from 'axios';
   
   const props = defineProps(["view"]);
   const access = ref('');
@@ -103,6 +105,55 @@
     const storedUser =localStorage.getItem('user');
     access.value =JSON.parse(storedUser);
   });
+
+  const aproveReservation = async (id) => {
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/reservas/aproveReservation.php',{
+        id:id,
+      });
+
+      if(response.data.success){
+        location.href = '/reservation';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
+  const rejectReservation = async (id) => {
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/reservas/rejectReservation.php',{
+        id:id,
+      });
+
+      if(response.data.success){
+        location.href = '/reservation';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const cancelReservation = async (id) => {
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/reservas/cancelReservation.php',{
+        id:id,
+      });
+
+      if(response.data.success){
+        location.href = '/reservation';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
   </script>
     
      <style scoped>

@@ -72,7 +72,7 @@ let listTypeUser=ref([
         });
 
         if (response.data.success) {
-            console.log("Usuário adicionado com sucesso:", response.data.message);
+          console.log("Usuário adicionado com sucesso:", response.data.message);
            location.href='/users'
             // Resetar campos ou fechar modal se necessário
         } else {

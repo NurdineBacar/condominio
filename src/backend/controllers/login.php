@@ -20,24 +20,39 @@ try {
         throw new Exception('Username ou password ausente.');
     }
 
-    // Prepara a consulta SQL
-    $query = "SELECT * FROM users WHERE email = ? AND upassword = ?";
+    // Prepara a consulta SQL para buscar o usuário pelo email
+    $query = "SELECT * FROM users WHERE email = ?";
     $stmt = $db->prepare($query);
-
+    
     // Vincula os parâmetros para evitar SQL Injection
-    $stmt->bind_param('ss', $username, $password);
+    $stmt->bind_param('s', $username);
     $stmt->execute();
 
     // Obtém o resultado da consulta
     $result = $stmt->get_result();
     
     if ($result->num_rows > 0) {
-        // Usuário encontrado, você pode extrair os dados, se necessário
+        // Usuário encontrado
         $userData = $result->fetch_assoc();
-        $response['success'] = true;
-        $response['message'] = 'Usuário autenticado com sucesso.';
-        $response['data'] = $userData; // Retorna os dados do usuário, se necessário
+        $storedPassword = $userData['upassword']; // Obtém a senha armazenada no banco de dados
+
+        // Verifica se a senha armazenada é hasheada ou não
+        if (password_verify($password, $storedPassword)) {
+            // Senha correta (hasheada)
+            $response['success'] = true;
+            $response['message'] = 'Usuário autenticado com sucesso (senha hasheada).';
+            $response['data'] = $userData;
+        } elseif ($password === $storedPassword) {
+            // Senha correta (texto plano)
+            $response['success'] = true;
+            $response['message'] = 'Usuário autenticado com sucesso (senha em texto plano).';
+            $response['data'] = $userData;
+        } else {
+            // Senha incorreta
+            throw new Exception('Credenciais inválidas.');
+        }
     } else {
+        // Usuário não encontrado
         throw new Exception('Credenciais inválidas.');
     }
 

@@ -29,14 +29,18 @@
                        {{ list.data_visita }}
                     </td>
                     <td>
-                        {{ list.hora_visita }}
+                        {{ list.hora }}
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        {{ list.hora_entrada ==null? 'Vazio' : list.hora_entrada }}
+                    </td>
+                    <td>
+                        {{ list.hora_saida ==null? 'Vazio' : list.hora_saida }}
+                    </td>
                     <td>
                         <div class="d-flex gap-3 justify-content-center">
-                           <button class="btn btn-danger rounded-circle"><i class="fa-solid fa-xmark"></i></button>
-                           <button class="btn rounded-circle" id="visit-check" @click="acceptVisit(list)"><i class="fa-solid fa-check"></i></button>
+                           <button class="btn btn-danger rounded-circle" @click="rejectVisit(list.visita_id)" v-show="list.hora_entrada == null"><i class="fa-solid fa-xmark"></i></button>
+                           <button class="btn rounded-circle" id="visit-check" @click="list.hora_entrada !=null? leavetVisit(list.visita_id):acceptVisit(list.visita_id)" v-show="list.hora_saida == null"><i class="fa-solid fa-check"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -55,9 +59,47 @@ const props = defineProps(['lists']);
 
 const acceptVisit = async (visit)=>{
     try{
-        
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/visitas/entryVisit.php',{
+        id: visit,
+      });
+
+      if(response.data.success){
+        location.href = '/security';
+      }else{
+        console.log(response.data.message);
+      }
     }catch(error){
-        console.log(error);
+      console.log(error)
+    }
+}
+const leavetVisit = async (visit)=>{
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers//visitas/leaveVisit.php',{
+        id: visit,
+      });
+
+      if(response.data.success){
+        location.href = '/security';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+}
+const rejectVisit = async (visit)=>{
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/reservas//visitas/rejectVisit.php',{
+        id: visit,
+      });
+
+      if(response.data.success){
+        location.href = '/security';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
     }
 }
 

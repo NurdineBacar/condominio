@@ -32,7 +32,7 @@
     <div class="col-md-12" id="item" v-show="seletedData == 'visitas'">
       <table class="w-100 fw-semibold">
             <tbody>
-                <tr v-for="list in listVisits" :key="list.visita_id">
+                <tr v-for="list in filtereVisits" :key="list.visita_id">
                     <td class="">
                         <span><i class="fa-solid fa-house-user me-2"></i>
                             {{ list.name_user }}</span>
@@ -47,11 +47,11 @@
                        {{ list.data_visita }}
                     </td>
                     <td>
-                        {{ list.hora_visita }}
+                        {{ list.hora }}
                     </td>
                     <td class="py-2">
                         <div class="d-flex gap-3 justify-content-center">
-                           <button class="btn btn-danger rounded-circle"><i class="fa-solid fa-xmark"></i></button>
+                           <button class="btn btn-danger rounded-circle" @click="deleteVisit(list.visita_id)"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -62,7 +62,7 @@
     <div class="col-md-12" id="item" v-show="seletedData == 'reservas'">
       <table class="w-100">
             <tbody>
-                <tr v-for="reserv in listReservation" :key="reserv.id" class="fw-semibold">
+                <tr v-for="reserv in filteredReservations" :key="reserv.id" class="fw-semibold">
                     <td class="ps-4 py-2">
                         <div class="d-flex gap-2 align-items-center">
                             <i class="fa-solid fa-calendar fs-2"></i>
@@ -98,17 +98,21 @@
 
 <script setup>
 import { defineProps, onMounted, ref, computed } from "vue";
+import mView from "../components/modals/viewReservation.vue";
+import axios from "axios";
 
-const props = defineProps(["tabela"]);
+const props = defineProps(["user_id"]);
 const user = ref("");
 const listVisits = ref([]),
   listReservation = ref([]);
 const seletedData = ref("visitas");
+const dataView=ref([]);
 
 // Carrega os dados do usuário ao montar o componente
 onMounted(async () => {
   console.log(filtereVisits);
   const storedUser = localStorage.getItem("user");
+
   if (storedUser) {
     user.value = JSON.parse(storedUser);
   } else {
@@ -130,8 +134,10 @@ onMounted(async () => {
     if (json_1.success && json_2.success) {
       listVisits.value = json_1.data;
       listReservation.value = json_2.data;
-      console.log(listVisits.value);
+      // console.log(listVisits.value);
       console.log(listReservation.value);
+      // console.log(12);
+      
     } else {
       console.error("Erro na resposta:", json.message);
     }
@@ -140,10 +146,67 @@ onMounted(async () => {
   }
 });
 
-const filtereVisits = computed(() => {
-  return listVisits.value.filter((visits) => visits.id === user.id);
+const filteredReservations = computed(() => {
+  return listReservation.value.filter((reserv) => Number(reserv.id_user) === user.value.id);
 });
 
+const filtereVisits = computed(() => {
+  return listVisits.value.filter((visits) => 
+  visits.user === user.id && visits.hora_entrada ==null);
+});
+
+const deleteVisit = async (visit)=>{
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/visitas/deleteVisita.php',{
+        id: visit,
+      });
+
+      if(response.data.success){
+        location.href = '/profile';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+}
+
+const deleteReservation = async (visit)=>{
+    try{
+      const response = await axios.post('http://localhost/condomino/src/backend/controllers/deleteReservation.php',{
+        id: visit,
+      });
+
+      if(response.data.success){
+        location.href = '/profile';
+      }else{
+        console.log(response.data.message);
+      }
+    }catch(error){
+      console.log(error)
+    }
+}
+
+function showReservation(id) {
+  const selectedReservation = listReservation.value.find(reserv => reserv.id === id);
+  if (selectedReservation) {
+    dataView.value = {
+      id: selectedReservation.id,
+      propose: selectedReservation.proposito,
+      area: selectedReservation.area,
+      aprovation: selectedReservation.aprovacao,
+      reg_date: selectedReservation.data_registo,
+      end_date: selectedReservation.data_reserva,
+      int_time: selectedReservation.hora_inicio,
+      end_time: selectedReservation.hora_fim,
+      details: selectedReservation.detalhes,
+      status: selectedReservation.estado,
+    };
+    
+  } else {
+    console.error('Reserva não encontrada.');
+  }
+}
 
 </script>
 

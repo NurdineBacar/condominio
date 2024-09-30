@@ -30,7 +30,9 @@
                         {{ reserv.hora_inicio }}
                     </td>
                     <td class="ps-2">
-                        <span class="badge bg-primary" >{{ reserv.estado }}</span> 
+                        <span :class="'badge '+ (reserv.estado === 'concluido'? 'bg-success': reserv.estado === 'pendente'? 'bg-warning':'bg-danger')">
+                            {{ reserv.estado }}
+                        </span>
                     </td>
                     <td class="px-2">
                         <div class="d-flex gap-3 justify-content-center">
@@ -56,19 +58,19 @@ const dataView=ref([]);
 const listReservation=ref('');
 const access= ref('');
 
-const deleteUser =  async (id_user)=>{
+const deleteReservation =  async (id)=>{
     try{
-        const response = await axios.post("http://localhost/condomino/src/backend/controllers/deleteUser.php", {
-            id: id_user,
+        const response = await axios.post("http://localhost/condomino/src/backend/controllers/deleteReservation.php", {
+            id: id,
         });
 
         if(response.data.success){
-            console.log("Usuario elimidao com, sucesso")
+            console.log("Reserva elimida com, sucesso")
         }else{
-            console.log("errro ao deltar o usaurio: ", response.data.message)
+            console.log("Erro ao deletar a reserva: ", response.data.message)
         }
     }catch(error){
-        console.log("Erro ao buscadar dados: ",error)
+        console.log("Erro ao buscar dados: ",error)
     }
 }
 
@@ -93,6 +95,7 @@ function showReservation(id) {
   const selectedReservation = listReservation.value.find(reserv => reserv.id === id);
   if (selectedReservation) {
     dataView.value = {
+      id: selectedReservation.id,
       propose: selectedReservation.proposito,
       area: selectedReservation.area,
       aprovation: selectedReservation.aprovacao,

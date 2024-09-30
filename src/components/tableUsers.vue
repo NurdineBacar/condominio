@@ -1,71 +1,70 @@
 <template>
     <div>
-        <table>
-            <thead>
-                <tr>
-                    <td>Foto</td>
-                    <td>Nome</td>
-                    <td>Telefone</td>
-                    <td>Email</td>
-                    <td>Casa</td>
-                    <td>Estado</td>
-                    <td>Operacoes</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="user in users" :key="user.id">
-                    <td>
-                        <img :src="'/img/profile/'+user.photo" width="50px" height="50px" class="rounded" alt="">
-                    </td>
-                    <td>
-                       {{ user.name_user }}
-                    </td>
-                    <td>
-                        {{ user.telephone }}
-                    </td>
-                    <td>
-                        {{ user.email }}
-                    </td>
-                    <td>
-                        nº {{ user.nhouse }}
-                    </td>
-                    <td>
-                        <span class="badge bg-primary" >{{ user.ustatus }}</span> 
-                    </td>
-                    <td>
-                        <div class="d-flex gap-3 justify-content-center">
-                            <a href=""><i class="fa-solid fa-pen-to-square fs-5" @click.prevent="editUser(user.id)"></i></a>
-                            <a href=""><i class="fa-solid fa-trash fs-5" @click.prevent="deleteUser(user.id)"></i></a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <td>Foto</td>
+            <td>Nome</td>
+            <td>Telefone</td>
+            <td>Email</td>
+            <td>Casa</td>
+            <td>Estado</td>
+            <td>Operações</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.id">
+            <td><img :src="'/img/profile/'+user.photo" width="50px" height="50px" class="rounded" alt=""></td>
+            <td>{{ user.name_user }}</td>
+            <td>{{ user.telephone }}</td>
+            <td>{{ user.email }}</td>
+            <td>nº {{ user.nhouse }}</td>
+            <td><span class="badge bg-primary">{{ user.ustatus }}</span></td>
+            <td>
+              <div class="d-flex gap-3 justify-content-center">
+                <a href="" @click.prevent="openEditModal(user)"  data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
+                <a href="" @click.prevent="deleteUser(user.id)"><i class="fa-solid fa-trash fs-5"></i></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <userEditModal :userToEdit="selectedUser"/>
     </div>
-</template>
-
-<script setup>
-import { defineProps } from "vue";
-import axios from "axios";
-
-const props= defineProps(['users']);
-
-const deleteUser =  async (id_user)=>{
-    try{
-        const response = await axios.post("http://localhost/condomino/src/backend/controllers/deleteUser.php", {
-            id: id_user,
-        });
-
-        if(response.data.success){
-            console.log("Usuario elimidao com, sucesso")
-        }else{
-            console.log("errro ao deltar o usaurio: ", response.data.message)
-        }
-    }catch(error){
-        console.log("Erro ao buscadar dados: ",error)
+  </template>
+  
+  <script setup>
+  import { ref } from 'vue';
+  import userEditModal from '../components/userEditModal.vue';
+  
+  const props = defineProps({
+    users: Array,
+    listTypeUser: Array,
+    listHouses: Array
+  });
+  
+  const selectedUser = ref(null);
+  
+  const openEditModal = (user) => {
+    selectedUser.value = { ...user };
+  };
+  
+  const deleteUser = async (id_user) => {
+    try {
+      const response = await axios.post("http://localhost/condomino/src/backend/controllers/deleteUser.php", { id: id_user });
+  
+      if (response.data.success) {
+        console.log("Usuário eliminado com sucesso");
+        location.href = '/users';
+      } else {
+        console.log("Erro ao deletar o usuário:", response.data.message);
+      }
+    } catch (error) {
+      console.log("Erro ao deletar o usuário:", error);
     }
-}
-</script>
+  };
+  </script>
+  
 
 
 <style scoped>

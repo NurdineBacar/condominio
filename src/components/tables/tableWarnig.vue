@@ -33,10 +33,14 @@
             {{ warn.data_validade }}
           </td>
           <td>
-            <span class="badge bg-primary">{{ warn.nivel_prioridade }}</span>
+            <span :class="'badge '+ (warn.nivel_prioridade === 'baixa'? 'bg-primary': warn.nivel_prioridade === 'media'? 'bg-warning': 'bg-danger')">
+              {{ warn.nivel_prioridade }}
+            </span>
           </td>
           <td class="ps-2">
-            <span class="badge bg-primary">{{ warn.estado }}</span>
+            <span :class="'badge '+ (warn.estado == 'pendente'? 'bg-warning': warn.estado ==='concluido'? 'bg-success': 'bg-danger')">
+              {{ warn.estado }}
+            </span>
           </td>
           <td class="px-2">
             <div class="d-flex gap-3 justify-content-center">
@@ -68,19 +72,20 @@ const dataView = ref([]);
 const listWarning = ref("");
 const access = ref('')
 
-const deleteWarning = async (id_user) => {
+const deleteWarning = async (id) => {
   try {
     const response = await axios.post(
-      "http://localhost/condomino/src/backend/controllers/deleteUser.php",
+      "http://localhost/condomino/src/backend/controllers/avisos/deleteWarning.php",
       {
-        id: id_user,
+        id: id,
       }
     );
 
     if (response.data.success) {
-      console.log("Usuario elimidao com, sucesso");
+      console.log("Aviso eliminado com, sucesso");
+      location.href = '/warning'
     } else {
-      console.log("errro ao deltar o usaurio: ", response.data.message);
+      console.log("Erro ao deletar o aviso: ", response.data.message);
     }
   } catch (error) {
     console.log("Erro ao buscadar dados: ", error);

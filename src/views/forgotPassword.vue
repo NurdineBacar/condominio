@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-12 mt-1">
               <label for="" class="fw-bold mb-2 fs-5">Email</label>
-              <inputs typeInput="text" pHolder="Email" icon="fa-solid fa-user" v-model="eamil"
+              <inputs typeInput="text" pHolder="Email" icon="fa-solid fa-user" v-model="email"
               />
             </div>
             <div class="col-md-12 mt-4">
@@ -39,6 +39,26 @@
   import axios from "axios";
   
   const router = useRouter();
+  const email = ref(''); // Corrigido o nome da variável
+
+const verifyEmail = async () => {
+  try {
+    const response = await axios.post('http://localhost/condomino/src/backend/controllers/sendOtp.php', {
+      email: email.value,
+    });
+
+    if (response.data.success) {
+      alert(response.data.message);
+      router.push('/reset-password'); // Redireciona para a página de redefinição de senha
+    } else {
+      alert(response.data.message);
+    }
+  } catch (error) {
+    console.error('Erro ao verificar o email:', error);
+    alert('Ocorreu um erro ao verificar o email.');
+  }
+};
+
   
   </script>
   
